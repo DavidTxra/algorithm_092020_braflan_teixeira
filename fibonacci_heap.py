@@ -1,71 +1,51 @@
-class Heap(object):
-    """
-    Une heap est une structure de données sous forme d'arbre.
-
-    https://en.wikipedia.org/wiki/Heap_(data_structure)
-    """
-
-    def insert(self, value: int) -> None:
-        """
-        Ajoute une valeur dans l'arbre
-        """
-        pass
-
-    def find_min(self) -> int:
-        """
-        Retourne la valeur minimum dans l'arbre
-        """
-        pass
-
-    def delete_min(self) -> int:
-        """
-        Supprime et retourne la valeur minimum dans l'arbre
-        """
-        pass
-
-    def decrease_key(self, current_value: int, new_value :int) -> None:
-        """
-        Modify une valeur dans l'arbre
-        """
-        pass
-
-    def merge(self, fibonnaci_heap: object) -> None:
-        """
-        Fusionne deux arbres
-        """
-        pass
+class FibonacciTree:
+    def __init__(self, value):
+        self.value = value
+        self.child = []
+        self.order = 0
+        self.parent = None
 
 
-class FibonacciHeap(Heap):
-    """
-    Une fibonnaci heap est un arbre permettant de stocker et trier des donnés efficacement
+class FibonacciHeap:
+    def __init__(self):
+        self.trees = []
+        self.least = None
+        self.head = None
+        self.count = 0
 
-    https://en.wikipedia.org/wiki/Fibonacci_heap
+    # Ajoute une valeur dans l'arbre
+    def insert(self, value):
+        new_tree = FibonacciTree(value)
+        self.trees.append(new_tree)
+        if (self.least is None or value < self.least.value):
+            self.least = new_tree 
+        if (self.head is None or value > self.head.value):
+            self.head = new_tree        
+        self.count = self.count + 1
 
-    L'implémentation est décrite en anglais : https://en.wikipedia.org/wiki/Fibonacci_heap#Implementation_of_operations
-    et en français : https://fr.wikipedia.org/wiki/Tas_de_Fibonacci#Implémentation_des_opérations
-    """
+    # Retourne la valeur minimum dans l'arbre
+    def find_min(self):
+        if self.least is None:
+            return None
+        return self.least.value 
 
-    def insert(self, value: int) -> None:
-        """
-        Ajoute une valeur dans l'arbre
-        """
-        pass
+    # Retourne la valeur maximum dans l'arbre
+    def find_max(self):
+        if self.head is None:
+            return None
+        return self.head.value    
 
-    def find_min(self) -> int:
-        """
-        Retourne la valeur minimum dans l'arbre
-        """
-        pass
 
-    def delete_min(self) -> int:
-        """
-        Supprime et retourne la valeur minimum dans l'arbre
-        """
-        pass
+fibonacci_heap = FibonacciHeap()
 
-    def merge(self, fibonnaci_heap: Heap) -> None:
-        """
-        Fusionne deux arbres
-        """
-        pass
+fibonacci_heap.insert(7)
+fibonacci_heap.insert(3)
+fibonacci_heap.insert(17)
+fibonacci_heap.insert(24)
+fibonacci_heap.insert(12)
+fibonacci_heap.insert(3)
+fibonacci_heap.insert(4)
+
+print('Valeur minimum: ' + format(fibonacci_heap.find_min()))
+
+print('Valeur maximum: ' + format(fibonacci_heap.find_max()))
