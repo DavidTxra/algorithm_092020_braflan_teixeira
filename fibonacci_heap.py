@@ -55,7 +55,22 @@ class FibonacciHeap:
     def find_max(self):
         if self.head is None:
             return None
-        return self.head.value  
+        return self.head.value
+
+    # Supprime et retourne la valeur maximum dans l'arbre
+    def delete_max(self):
+        max = self.head
+        if max is not None:
+            for child in max.child:
+                self.trees.append(child)
+            self.trees.remove(max)
+            if self.trees == []:
+                self.head = None
+            else:
+                self.head = self.trees[0]
+                self.consolidate()
+            self.count = self.count - 1
+            return max.value      
 
     def consolidate(self):
         aux = (floor(self.count) + 1) * [None]
@@ -100,3 +115,7 @@ print('Valeur maximum: ' + format(fibonacci_heap.find_max()))
 fibonacci_heap.delete_min()
 
 print('Nouvelle valeur minimum: ' + format(fibonacci_heap.find_min()))
+
+fibonacci_heap.delete_max()
+
+print('Nouvelle valeur maximum: ' + format(fibonacci_heap.find_max()))
