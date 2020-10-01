@@ -1,9 +1,16 @@
+import math
+
 class FibonacciTree:
     def __init__(self, value):
         self.value = value
         self.child = []
         self.order = 0
         self.parent = None
+
+    # ajouter l'arbre a la fin
+    def add_tree(self, tree):
+        self.child.append(tree)
+        self.order = self.order + 1      
 
 
 class FibonacciHeap:
@@ -33,7 +40,33 @@ class FibonacciHeap:
     def find_max(self):
         if self.head is None:
             return None
-        return self.head.value    
+        return self.head.value  
+
+    def consolidate(self):
+        aux = (floor(self.count) + 1) * [None]
+
+        while self.trees != []:
+            x = self.trees[0]
+            order = x.order
+            self.trees.remove(x)
+            while aux[order] is not None:
+                y = aux[order]
+                if x.value > y.value:
+                    x, y = y, x
+                x.add_tree(y)
+                aux[order] = None
+                order = order + 1
+            aux[order] = x
+
+        self.least = None
+        for k in aux:
+            if k is not None:
+                self.trees.append(k)
+                if self.least is None or k.value < self.least.value:
+                    self.least = k
+
+def floor(x):
+    return math.frexp(x)[1] - 1      
 
 
 fibonacci_heap = FibonacciHeap()
