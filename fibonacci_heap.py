@@ -36,6 +36,21 @@ class FibonacciHeap:
             return None
         return self.least.value 
 
+    # Supprime et retourne la valeur minimum dans l'arbre
+    def delete_min(self):
+        small = self.least
+        if small is not None:
+            for child in small.child:
+                self.trees.append(child)
+            self.trees.remove(small)
+            if self.trees == []:
+                self.least = None
+            else:
+                self.least = self.trees[0]
+                self.consolidate()
+            self.count = self.count - 1
+            return small.value
+
     # Retourne la valeur maximum dans l'arbre
     def find_max(self):
         if self.head is None:
@@ -76,9 +91,12 @@ fibonacci_heap.insert(3)
 fibonacci_heap.insert(17)
 fibonacci_heap.insert(24)
 fibonacci_heap.insert(12)
-fibonacci_heap.insert(3)
 fibonacci_heap.insert(4)
 
 print('Valeur minimum: ' + format(fibonacci_heap.find_min()))
 
 print('Valeur maximum: ' + format(fibonacci_heap.find_max()))
+
+fibonacci_heap.delete_min()
+
+print('Nouvelle valeur minimum: ' + format(fibonacci_heap.find_min()))
